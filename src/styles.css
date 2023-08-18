@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+:root{
+    --primary-color: rgb(11, 88, 83);
+    --secondary-color: rgb(215, 250, 234);
+    --body-text-color: rgb(94, 91, 91);
+    --navbar-footer-color: rgb(249, 253, 250);
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: var(--body-text-color)
+}
+
+.shadow-effect{
+    border: none !important;
+    box-shadow: 0px 0px 33px -10px rgba(7,114,254, 0.3);
+}
+
+.bg-theme{
+    background-color: var(--primary-color);
+}
+
+.bg-secondary-theme{
+    background-color: var(--secondary-color);
+}
+
+.text-theme-primary{
+    color: var(--primary-color);
+}
+
+input[type = text], input[type = email] {
+    height: 60px;
+    padding-left: 20px;
+    font-size: 13px;
+    width: 100%;
+}
+
+.btn-theme{
+    color: white !important;
+    height: 58px;
+    border: none;
+    font-size: 13px;
+    background-color: var(--primary-color) !important;
+}

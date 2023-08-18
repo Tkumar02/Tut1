@@ -7,10 +7,7 @@ import { HomeComponent } from './home/home.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Tut1';
+
   constructor() {}
 
-  showWord($event: any){
-    console.log($event, 'yes')
-  }
 }
