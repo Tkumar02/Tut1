@@ -1,34 +1,47 @@
-import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component, OnInit } from '@angular/core';
+import { CategoriesService } from '../services/categories.service';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
+
 export class CategoriesComponent {
-  categoryData: any = {}
-  subCat: any = {}
+  categoryData: Category = {};
+  categoriesArray: Array<any> = [];
+  formCategory: string = '';
+  formStatus: string = 'Add';
+  categoryID: string = '';
   
-  constructor( private afs: AngularFirestore ) {}
+  constructor( private categoryService: CategoriesService ) {}
+
+  ngOnInit(): void{
+    this.categoryService.loadData().subscribe(val=>{
+      //console.log(val);
+      this.categoriesArray = val;
+    })
+  }
 
   onSubmit(form: any){
-    this.categoryData.category = form.value.category
-    this.categoryData.active = false
+    this.categoryData = form.value
+    if(this.formStatus == 'Add'){
+    this.categoryService.saveData(this.categoryData);
+    form.reset()
+    }
+    else if(this.formStatus=='Edit'){
+      this.categoryService.updateData(this.categoryID, this.categoryData)
+      form.reset()
+      this.formStatus = 'Add'
+    }
+  }
 
-    this.subCat.field = 'subCAT1'
-
-    console.log(this.categoryData)
-
-    this.afs.collection('categories').add(this.categoryData).then(docRef=> {
-      console.log(docRef.id);
-      this.afs.collection('categories').doc(docRef.id).collection('subCategories').add(this.subCat).then(docRef1=>{
-        console.log(docRef1);
-
-        this.afs.doc(`categories/${docRef.id}/subCategories/${docRef1.id}`).collection('subsubCategories').add(this.subCat)
-      })
-    })
-    .catch(err => {console.log(err)})
+  updateCategory(cat:any, id:string) {
+    this.formCategory = cat
+    this.formStatus = 'Edit'
+    this.categoryID = id
+    console.log(cat, id, this.formStatus)
   }
 
 }
