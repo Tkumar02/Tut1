@@ -1,4 +1,4 @@
 export interface Category {
-    category?: string
+    catName?: string
     status?: boolean
 }

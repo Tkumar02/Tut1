@@ -25,12 +25,14 @@ export class CategoriesComponent {
   }
 
   onSubmit(form: any){
-    this.categoryData = form.value
+    this.categoryData.catName = this.formCategory
+    this.categoryData.status = false
     if(this.formStatus == 'Add'){
     this.categoryService.saveData(this.categoryData);
     form.reset()
     }
     else if(this.formStatus=='Edit'){
+      this.categoryData.status = true
       this.categoryService.updateData(this.categoryID, this.categoryData)
       form.reset()
       this.formStatus = 'Add'
@@ -41,7 +43,8 @@ export class CategoriesComponent {
     this.formCategory = cat
     this.formStatus = 'Edit'
     this.categoryID = id
-    console.log(cat, id, this.formStatus)
+    this.categoryData.status = true
+    console.log(cat, id, this.categoryData.status)
   }
 
   deleteCategory(id:string){

@@ -37,17 +37,17 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Category</th>
-                                    <th>Status</th>
+                                    <th>Edited</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let category of categoriesArray; let i = index">
                                     <td>{{i+1}}</td>
-                                    <td>{{category.data.category}}</td>
+                                    <td>{{category.data.catName}}</td>
                                     <td>{{category.data.status}}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-warning" (click)="updateCategory(category.data.category, category.id)">Edit</button>
+                                        <button class="btn btn-sm btn-warning" (click)="updateCategory(category.data.catName, category.id)">Edit</button>
                                         <button class="btn btn-sm ms-2 btn-danger" (click)="deleteCategory(category.id)">Delete</button>
                                     </td>
                                 </tr>
