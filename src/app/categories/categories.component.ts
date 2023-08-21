@@ -44,4 +44,8 @@ export class CategoriesComponent {
     console.log(cat, id, this.formStatus)
   }
 
+  deleteCategory(id:string){
+    this.categoryService.deleteData(id)
+  }
+
 }
