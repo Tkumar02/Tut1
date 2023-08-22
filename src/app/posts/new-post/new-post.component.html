@@ -11,11 +11,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="postTitle" [(ngModel)]="postTitle" (input)="submitTitle()">
                             </div>
                             <div class="form-group">
-                                <label>Permalink</label>
-                                <input type="html" class="form-control">
+                                <label >Permalink</label>
+                                <input type="html" class="form-control" name="permaLink" [(ngModel)]="permaLink" disabled>
                             </div>
                             <div class="form-group mt-5">
                                 <label>Excerpt</label>
@@ -35,7 +35,8 @@
 
                     <div class="form-group">
                         <label for="">Post Image</label>
-                        <input type="file" class="form-control">
+                        <img [src]="imgSrc" class="form-control img-fluid img-preview" alt="">
+                        <input type="file" class="form-control" accept="image/*" name="newImg" [(ngModel)]="newImg" (change)="uploadImg($event)">
                     </div>
                 </div>
                 </div>
@@ -45,7 +46,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Content</label>
-                                    <textarea cols="30" rows="10" class="form-control"></textarea>
+                                    <angular-editor placeholder="Add content"></angular-editor>
                                 </div>
                             </div>
                         </div>
