@@ -13,4 +13,42 @@
             </div>
         </div>
     </div>
+    <div class="row">
+       <div class="col-md-12 card shadow-effect bg-theme mt-5 text-white mb-3">
+        <h2 class="text-center mt-3"> Your Posts </h2>
+        <div class="card shadow-effect mb-3">
+            <div class="card-body">
+                <table class="table row-border hover mb-3">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Post Image</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Link</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let post of posts; let i=index">
+                            <td>{{i+1}}</td>
+                            <td width="200"><img src="{{this.post.data.postImgPath}}" class="img img-fluid"> {{this.post.data.excerpt}}</td>
+                            <td>{{this.post.data.title}}</td>
+                            <td>{{this.post.data.category.category}}</td>
+                            <!-- <td>{{changeDate(this.post.createdAt['seconds'])}}</td> -->
+                            <td>{{this.post.data.createdAt.toMillis() | date}}</td>
+                            <td>{{this.post.data.permaLink}}</td>
+                            <td>
+                                <button class="btn btn-warning me-2" routerLink="/posts/new" [queryParams]="{id: post.id}">Edit</button>
+                                <button class="btn btn-danger" (click)="deletePost(this.post.data.postImgPath, post.id)">Delete</button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+       </div>
+    </div>
 </div>

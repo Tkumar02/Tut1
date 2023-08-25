@@ -4,6 +4,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { Validators } from '@angular/forms';
 import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-post',
@@ -18,7 +19,6 @@ export class NewPostComponent {
   imgSrc: any = 'assets/placeholder-image.jpg';
   newImg: any = '';
   postForm: FormGroup<any>;
-  blue: string = ''
   postData: Post = {
     title: '',
     permaLink: '',
@@ -32,9 +32,40 @@ export class NewPostComponent {
     views: 0,
     status: 'new',
     createdAt: new Date()
-}
+  }
 
-  constructor(private catService:CategoriesService, private fb: FormBuilder, private postService: PostsService){
+  editPost: any;
+  formStatus: string = 'Add New Post';
+  formAction: string = 'Add new post below';
+  postID: string = '';
+
+  constructor(
+    private catService:CategoriesService, 
+    private fb: FormBuilder, 
+    private postService: PostsService,
+    private route: ActivatedRoute
+    )
+
+    {
+    this.route.queryParams.subscribe(val=>{
+      this.postService.loadOneData(val['id']).subscribe(post=>{
+        this.postID = val['id'];
+        this.editPost = post;
+        console.log(this.editPost)
+        this.postForm = this.fb.group({
+          title: [this.editPost.title, [Validators.required, Validators.minLength(10)]],
+          permaLink: [this.editPost.permaLink, Validators.required],
+          excerpt: [this.editPost.excerpt, [Validators.required, Validators.minLength(50)]],
+          category: [`${this.editPost.category.categoryId}-${this.editPost.category.category}`, Validators.required],
+          postImg: [''],
+          content: [this.editPost.content, Validators.required]
+        })
+        this.imgSrc = this.editPost.postImgPath;
+        this.formStatus = 'Edit Post';
+        this.formAction = 'Edit post below'
+      })
+    })
+
     this.postForm = this.fb.group({
       title: ['',[Validators.required, Validators.minLength(10)]],
       permaLink: ['', Validators.required],
@@ -49,6 +80,8 @@ export class NewPostComponent {
     this.catService.loadData().subscribe(val=>{
       this.categories = val
     })
+
+    
   }
 
   get fc() {
@@ -82,7 +115,7 @@ export class NewPostComponent {
     this.postData.category.category = this.postForm.value.category.split('-')[1]
 
     console.log(this.postData.category)
-    this.postService.uploadPost(this.newImg, this.postData);
+    this.postService.uploadPost(this.newImg, this.postData, this.formStatus, this.postID);
     this.postForm.reset();
     this.imgSrc = 'assets/placeholder-image.jpg';
   }
