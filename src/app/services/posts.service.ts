@@ -83,4 +83,10 @@ export class PostsService {
       this.toastr.warning('Post deleted')
     })
   }
+
+  markFeatured(id:string, featuredData:object){
+    this.afs.doc(`posts/${id}`).update(featuredData).then(()=>{
+      this.toastr.info('Featured Status Updated')
+    })
+  }
 }

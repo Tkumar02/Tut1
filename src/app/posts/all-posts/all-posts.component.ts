@@ -8,8 +8,10 @@ import { PostsService } from 'src/app/services/posts.service';
 })
 export class AllPostsComponent {
 
-  posts: Array<any> = []
-  postDate: string = ''
+  posts: Array<any> = [];
+  postDate: string = '';
+  postData: Array<any> = [];
+  featured: boolean = false;
 
   constructor(private postService: PostsService){}
 
@@ -23,6 +25,13 @@ export class AllPostsComponent {
   deletePost(postImgPath: string, id:string){
     this.postService.deleteImage(postImgPath, id)
   }
+
+  markFeatured(id:string, value:boolean){
+    const featuredData = {
+      isFeatured: value
+    }
+    this.postService.markFeatured(id,featuredData)
+  } 
 
 //the code below does work but it's not perfect as i can't easily get milliseconds included - better to use a pipe!
   changeDate(dateOfPost:number){

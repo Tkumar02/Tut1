@@ -26,6 +26,7 @@
                             <th>Title</th>
                             <th>Category</th>
                             <th>Date</th>
+                            <th>Featured?</th>
                             <th>Link</th>
                             <th>Actions</th>
                         </tr>
@@ -38,6 +39,10 @@
                             <td>{{this.post.data.category.category}}</td>
                             <!-- <td>{{changeDate(this.post.createdAt['seconds'])}}</td> -->
                             <td>{{this.post.data.createdAt.toMillis() | date}}</td>
+                            <td>
+                                <button *ngIf="this.post.data.isFeatured" class="btn btn-success" (click)="markFeatured(post.id, false)">Remove Featured</button>
+                                <button *ngIf="!this.post.data.isFeatured" class="btn btn-info" (click)="markFeatured(post.id, true)">Mark Featured</button>
+                            </td>
                             <td>{{this.post.data.permaLink}}</td>
                             <td>
                                 <button class="btn btn-warning me-2" routerLink="/posts/new" [queryParams]="{id: post.id}">Edit</button>
