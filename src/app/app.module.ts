@@ -37,7 +37,7 @@ import { LoginComponent } from './auth/login/login.component';
     CategoriesComponent,
     AllPostsComponent,
     NewPostComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +51,7 @@ import { LoginComponent } from './auth/login/login.component';
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

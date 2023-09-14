@@ -1,5 +1,9 @@
-<header class="navbar navar-expand-lg fixed-top bg-white">
+<header class="navbar navar-expand-lg fixed-top bg-white shadow-effect">
     <div class="container justify-content-center">
         <a href="#" class="site-logo">ANG-BLOG</a>
+    </div>
+    <div class="container justify-content-center" *ngIf="status$ | async">
+        <span class="ms-auto">{{userEmail}}</span>
+        <button class="btn btn-sm btn info bg-secondary-theme text-theme-primary ms-2" (click)="signOut()">Log Out</button>
     </div>
 </header>
