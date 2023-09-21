@@ -53,12 +53,12 @@ export class NewPostComponent {
         this.editPost = post;
         console.log(this.editPost)
         this.postForm = this.fb.group({
-          title: [this.editPost.title, [Validators.required, Validators.minLength(10)]],
+          title: [this.editPost.title, [Validators.required, Validators.minLength(5)]],
           permaLink: [this.editPost.permaLink, Validators.required],
-          excerpt: [this.editPost.excerpt, [Validators.required, Validators.minLength(50)]],
+          excerpt: [this.editPost.excerpt, [Validators.required, Validators.minLength(15)]],
           category: [`${this.editPost.category.categoryId}-${this.editPost.category.category}`, Validators.required],
           postImg: [''],
-          content: [this.editPost.content, Validators.required]
+          content: [this.editPost.content, Validators.required, Validators.minLength(50)]
         })
         this.imgSrc = this.editPost.postImgPath;
         this.formStatus = 'Edit Post';
