@@ -11,14 +11,14 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './new-post.component.html',
   styleUrls: ['./new-post.component.css']
 })
-export class NewPostComponent {
+export class NewPostComponent implements OnInit {
   categories: Array<any> = [];
   selectOption: string = 'Select an option';
   postTitle: string = '';
   permaLink: string = '';
   imgSrc: any = 'assets/placeholder-image.jpg';
   newImg: any = '';
-  postForm: FormGroup<any>;
+  postForm!: FormGroup<any>;
   postData: Post = {
     title: '',
     permaLink: '',
@@ -47,32 +47,36 @@ export class NewPostComponent {
     )
 
     {
+
+      // this.postForm = this.fb.group({
+      //   title: ['',[Validators.required, Validators.minLength(10)]],
+      //   permaLink: ['', Validators.required],
+      //   excerpt: ['', [Validators.required, Validators.minLength(50)]],
+      //   category: ['', Validators.required],
+      //   postImg: [''],
+      //   content: ['', Validators.required]
+      // })
+    
     this.route.queryParams.subscribe(val=>{
       this.postService.loadOneData(val['id']).subscribe(post=>{
+        console.log('TA HERE!!!')
         this.postID = val['id'];
         this.editPost = post;
         console.log(this.editPost)
+        this.formStatus = 'Edit Post';
+        this.formAction = 'Edit post below'
+
         this.postForm = this.fb.group({
           title: [this.editPost.title, [Validators.required, Validators.minLength(5)]],
           permaLink: [this.editPost.permaLink, Validators.required],
           excerpt: [this.editPost.excerpt, [Validators.required, Validators.minLength(15)]],
           category: [`${this.editPost.category.categoryId}-${this.editPost.category.category}`, Validators.required],
           postImg: [''],
-          content: [this.editPost.content, Validators.required, Validators.minLength(50)]
+          content: [this.editPost.content, [Validators.required, Validators.minLength(50)]]
         })
-        this.imgSrc = this.editPost.postImgPath;
-        this.formStatus = 'Edit Post';
-        this.formAction = 'Edit post below'
-      })
-    })
 
-    this.postForm = this.fb.group({
-      title: ['',[Validators.required, Validators.minLength(10)]],
-      permaLink: ['', Validators.required],
-      excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['', Validators.required],
-      postImg: [''],
-      content: ['', Validators.required]
+        this.imgSrc = this.editPost.postImgPath;
+      })
     })
   }
 
@@ -105,7 +109,7 @@ export class NewPostComponent {
 
     this.postForm.value.category.split('-');
 
-    console.log(this.postForm.value)
+    //console.log(this.postForm.value)
     this.postData.title = this.postForm.value.title,
     this.postData.permaLink = this.postForm.value.permaLink,
     this.postData.postImgPath= this.postForm.value.postImg,
@@ -114,7 +118,7 @@ export class NewPostComponent {
     this.postData.category.categoryId = this.postForm.value.category.split('-')[0]
     this.postData.category.category = this.postForm.value.category.split('-')[1]
 
-    console.log(this.postData.category)
+    //console.log(this.postData.category)
     this.postService.uploadPost(this.newImg, this.postData, this.formStatus, this.postID);
     this.postForm.reset();
     this.imgSrc = 'assets/placeholder-image.jpg';

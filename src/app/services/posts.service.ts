@@ -19,13 +19,13 @@ export class PostsService {
 
   uploadPost(selectedImage: any, postData:any, formStatus:string, id:string) {
     const filePath = `postIMG/${Date.now()}`
-    console.log(filePath)
+    //console.log(filePath)
     this.fStorage.upload(filePath, selectedImage).then(()=>{
-      console.log('image uploaded successfully!')
+      //console.log('image uploaded successfully!')
 
       this.fStorage.ref(filePath).getDownloadURL().subscribe(URL=>{
         postData.postImgPath = URL;
-        console.log(postData);
+        //console.log(postData);
         if(formStatus=='Edit Post'){
           this.updateData(id, postData)
         } else{
@@ -41,7 +41,7 @@ export class PostsService {
       this.toastr.success('Post uploaded successfully')
     })
     .catch(err=>{
-      console.log(err)
+      //console.log(err)
     })
     this.router.navigate(['/posts'])
   }

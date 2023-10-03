@@ -25,7 +25,7 @@ export class HeaderComponent {
         this.userEmail = userEmail;
       })
       //this.userName$ = this.authService.getUserName();
-      console.log(this.userName$)
+      //console.log(this.userName$)
       //this.userEmail = user.email
     }
   }

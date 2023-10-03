@@ -44,7 +44,7 @@ export class CategoriesComponent {
     this.formStatus = 'Edit'
     this.categoryID = id
     this.categoryData.status = true
-    console.log(cat, id, this.categoryData.status)
+    //console.log(cat, id, this.categoryData.status)
   }
 
   deleteCategory(id:string){

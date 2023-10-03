@@ -24,7 +24,7 @@ export class AuthService {
 
       this.loggedIn.next(true);
       this.logGuard = true;
-      console.log('logGuard from auth.service',this.logGuard);
+      //console.log('logGuard from auth.service',this.logGuard);
       this.router.navigate([''])
     }).catch(e=>{
       this.toastr.error(e)
@@ -33,7 +33,7 @@ export class AuthService {
 
   loadUser(){
     this.afAuth.authState.subscribe(user=>{
-      console.log('loadUser from auth.service after login happens',JSON.parse(JSON.stringify(user)))
+      //console.log('loadUser from auth.service after login happens',JSON.parse(JSON.stringify(user)))
       localStorage.setItem('user', JSON.stringify(user));
      
     });
@@ -46,7 +46,7 @@ export class AuthService {
 
       this.loggedIn.next(false);
       this.logGuard = false;
-      console.log('logGUARDDD after logOut on auth.service', this.logGuard);
+      //console.log('logGUARDDD after logOut on auth.service', this.logGuard);
       
       localStorage.removeItem('user');
     })
