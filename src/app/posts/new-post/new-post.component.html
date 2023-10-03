@@ -6,6 +6,8 @@
         </div>
     </div>
 
+    <div *ngIf="postForm">
+
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
         <div class="row">
         <div class="col-md-7">
@@ -87,4 +89,5 @@
             </div>
         </div>
     </form>
+    </div>
 </div>
