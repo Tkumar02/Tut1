@@ -1,6 +1,48 @@
-<h3>Subscribers List</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-effect bg-secondary-theme">
+                <div class="card-body text-centre">
+                    <h3 class="text-center text-theme-primary">Susbscribers list</h3>
+                    <p class="text-center">From here you can manage your subscribers</p>
+                    <div class="justify-content-center d-flex">
+                        <button class="btn btn-warning ms-2" routerLink="">Back to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+       <div class="col-md-12 card shadow-effect bg-theme mt-5 text-white mb-3">
+        <h2 class="text-center mt-3"> Subscriber List </h2>
+        <div class="card shadow-effect mb-3">
+            <div class="card-body">
+                <table class="table row-border hover mb-3">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sub of subscribers; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{sub.data.name}}</td>
+                            <td>{{sub.data.email}}</td>
+                            <td>
+                                <button class="btn btn-danger" (click)="deleteSub(sub.id)" >Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+       </div>
+    </div>
+</div>
 
-<table class="table mt-5 text-center">
+<!-- <table class="table mt-5 text-center">
     <thead>
         <tr>
             <th scope="col">Subscriber</th>
@@ -13,4 +55,4 @@
             <td >{{subscriber.email}}</td>
         </tr>
     </tbody>
-</table>
+</table> -->

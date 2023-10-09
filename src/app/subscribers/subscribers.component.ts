@@ -17,4 +17,8 @@ export class SubscribersComponent {
       this.subscribers=val;
     })
   }
+
+  deleteSub(id:string){
+    this.subs.deleteSubs(id)
+  }
 }
