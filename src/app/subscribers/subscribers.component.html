@@ -1,0 +1,16 @@
+<h3>Subscribers List</h3>
+
+<table class="table mt-5 text-center">
+    <thead>
+        <tr>
+            <th scope="col">Subscriber</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let subscriber of subscribers" >
+            <td >{{subscriber.name}}</td>
+            <td >{{subscriber.email}}</td>
+        </tr>
+    </tbody>
+</table>
