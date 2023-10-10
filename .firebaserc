@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "ang-blog-c56e2"
+  },
+  "targets": {
+    "ang-blog-c56e2": {
+      "hosting": {
+        "angBlogDashboard": [
+          "ang-backend-123"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

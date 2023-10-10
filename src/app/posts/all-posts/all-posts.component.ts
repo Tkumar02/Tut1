@@ -1,5 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { PostsService } from 'src/app/services/posts.service';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-all-posts',
@@ -9,16 +11,36 @@ import { PostsService } from 'src/app/services/posts.service';
 export class AllPostsComponent {
 
   posts: Array<any> = [];
+  allPosts: Array<any> = [];
   postDate: string = '';
   postData: Array<any> = [];
   featured: boolean = false;
 
-  constructor(private postService: PostsService){}
+  userEmail: string = '';
+  status$: Observable<boolean> | undefined
+  userName$: Observable<string> | undefined
+
+  constructor(private postService: PostsService, private authService: AuthService){}
 
   ngOnInit(): void {
+
+    let userString = (localStorage.getItem('user')) ?? '{}'
+    let user;
+    if(userString !== null){
+      user = JSON.parse(userString)
+      this.status$ = this.authService.logStatus();
+      this.authService.userN$.subscribe((userEmail)=>{
+      this.userEmail = userEmail;
+      })
+    }
+
     this.postService.loadPosts().subscribe(val=>{
-      //console.log(val,'abc')
-      this.posts = val
+      this.allPosts = val
+      for(let post of this.allPosts){
+        if(post.data.user == this.userEmail){
+          this.posts.push(post)
+        }
+      }
     })
   }
 

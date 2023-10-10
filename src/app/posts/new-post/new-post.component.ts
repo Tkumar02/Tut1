@@ -5,6 +5,8 @@ import { Validators } from '@angular/forms';
 import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-post',
@@ -31,40 +33,47 @@ export class NewPostComponent implements OnInit {
     isFeatured: false,
     views: 0,
     status: 'new',
-    createdAt: new Date()
+    createdAt: new Date(),
+    user: ''
   }
 
   editPost: any;
   formStatus: string = 'Add New Post';
   formAction: string = 'Add new post below';
   postID: string = '';
+  
+  userEmail: string = '';
+  status$: Observable<boolean> | undefined
+  userName$: Observable<string> | undefined
 
   constructor(
     private catService:CategoriesService, 
     private fb: FormBuilder, 
     private postService: PostsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
     )
 
     {
 
-      // this.postForm = this.fb.group({
-      //   title: ['',[Validators.required, Validators.minLength(10)]],
-      //   permaLink: ['', Validators.required],
-      //   excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      //   category: ['', Validators.required],
-      //   postImg: [''],
-      //   content: ['', Validators.required]
-      // })
+      this.postForm = this.fb.group({
+        title: ['',[Validators.required, Validators.minLength(10)]],
+        permaLink: ['', Validators.required],
+        excerpt: ['', [Validators.required, Validators.minLength(50)]],
+        category: ['', Validators.required],
+        postImg: [''],
+        content: ['', Validators.required]
+      })
     
     this.route.queryParams.subscribe(val=>{
       this.postService.loadOneData(val['id']).subscribe(post=>{
-        console.log('TA HERE!!!')
         this.postID = val['id'];
         this.editPost = post;
-        console.log(this.editPost)
-        this.formStatus = 'Edit Post';
-        this.formAction = 'Edit post below'
+        if(val['id']){
+          this.formStatus = 'Edit Post';
+          this.formAction = 'Edit post below'
+        }
+        
 
         this.postForm = this.fb.group({
           title: [this.editPost.title, [Validators.required, Validators.minLength(5)]],
@@ -72,7 +81,8 @@ export class NewPostComponent implements OnInit {
           excerpt: [this.editPost.excerpt, [Validators.required, Validators.minLength(15)]],
           category: [`${this.editPost.category.categoryId}-${this.editPost.category.category}`, Validators.required],
           postImg: [''],
-          content: [this.editPost.content, [Validators.required, Validators.minLength(50)]]
+          content: [this.editPost.content, [Validators.required, Validators.minLength(50)]],
+          user: this.userEmail
         })
 
         this.imgSrc = this.editPost.postImgPath;
@@ -85,7 +95,15 @@ export class NewPostComponent implements OnInit {
       this.categories = val
     })
 
-    
+    let userString = (localStorage.getItem('user')) ?? '{}'
+    let user;
+    if(userString !== null){
+      user = JSON.parse(userString)
+      this.status$ = this.authService.logStatus();
+      this.authService.userN$.subscribe((userEmail)=>{
+      this.userEmail = userEmail;
+      })
+    }       
   }
 
   get fc() {
@@ -117,6 +135,7 @@ export class NewPostComponent implements OnInit {
     this.postData.content= this.postForm.value.content,
     this.postData.category.categoryId = this.postForm.value.category.split('-')[0]
     this.postData.category.category = this.postForm.value.category.split('-')[1]
+    this.postData.user = this.userEmail
 
     //console.log(this.postData.category)
     this.postService.uploadPost(this.newImg, this.postData, this.formStatus, this.postID);
