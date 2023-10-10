@@ -36,12 +36,14 @@ export class AllPostsComponent {
 
     this.postService.loadPosts().subscribe(val=>{
       this.allPosts = val
-      for(let post of this.allPosts){
-        if(post.data.user == this.userEmail){
-          this.posts.push(post)
-        }
+      if(this.userEmail == 'admin@gmail.com'){
+        this.posts = this.allPosts
+      }
+      else{
+        this.posts = this.allPosts.filter(post=>post.data.user==this.userEmail)
       }
     })
+    
   }
 
   deletePost(postImgPath: string, id:string){
