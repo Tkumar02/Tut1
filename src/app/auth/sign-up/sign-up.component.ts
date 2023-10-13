@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
+import { ObjectUnsubscribedError } from 'rxjs';
 
 export function passwordsMatchValidator(): ValidatorFn {
   return(control:AbstractControl): ValidationErrors | null => {
@@ -34,9 +37,14 @@ export class SignUpComponent {
   incorrectPassword: boolean = true
   oPassword: string = '';
   cPassword: string = '';
-  eMail: string = ''
+  eMail: string = '';
+  userName: string = '';
+  userDetails: User = {
+    email: '',
+    userName: ''
+  }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void{}
 
@@ -65,9 +73,19 @@ export class SignUpComponent {
     ]
   }
 
-  onSubmit(password:string, email:string){
-    console.log('SUBMITTED!')
-    this.authService.signUp(email, password)
+  onSubmit(password:string, email:string, userName: string){
+    
+    this.userDetails.email = this.eMail
+    this.userDetails.userName = this.userName
+    this.userService.checkUserName(this.userName).subscribe(val=>{
+      if(val.empty){
+        this.userService.addUser(this.userDetails);
+        this.authService.signUp(email, password);
+      }
+      else{
+        alert(this.userName + ' already exists, please choose another user name')
+      }
+    })
   }
 }
 
