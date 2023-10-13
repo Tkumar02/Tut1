@@ -31,6 +31,16 @@ export class AuthService {
     });
   }
 
+  signUp(email:string, password:string){
+    this.afAuth.createUserWithEmailAndPassword(email, password).then(logRef=>{
+      this.toastr.success('Successfully created profile')
+      console.log(email, password, 'TA LOOK HERE')
+      this.router.navigate(['/login'])
+    }).catch(e=>{
+      this.toastr.error(e)
+    })
+  }
+
   loadUser(){
     this.afAuth.authState.subscribe(user=>{
       //console.log('loadUser from auth.service after login happens',JSON.parse(JSON.stringify(user)))

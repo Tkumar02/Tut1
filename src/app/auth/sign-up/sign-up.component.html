@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 ms-auto me-auto">
+            <div class="card p-5 shadow-effect bg-secondary-theme">
+
+                <div class="text-center">
+                    <h3 class="text-theme-primary">Sign up form</h3>
+                    <p>Please enter details below to join our community</p>
+                </div>
+
+                <form #loginForm= ngForm>
+                    <div class="form-group">
+                        <label>Enter a User name</label>
+                        <input type="text" 
+                        class="form-control" 
+                        placeholder="User name" 
+                        name="userName" 
+                        #UserName = "ngModel"
+                        ngModel
+                        required
+                        [ngClass]="{'is-invalid':UserName.touched&&UserName.invalid}">
+                        <div class="alert alert-danger" *ngIf = "UserName.touched && UserName.invalid">
+                            <div>User name cannot be empty</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Email Address</label>
+                        <input type="email"
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="email" 
+                        [(ngModel)]="eMail"
+                        #Email="ngModel"
+                        ngModel
+                        required
+                        email
+                        [ngClass]="{'is-invalid':Email.touched&&Email.invalid}">
+                        <div class="alert alert-danger" *ngIf = "Email.touched && Email.invalid">
+                            <div *ngIf="Email.errors?.['required']">Please enter an email address</div>
+                            <div *ngIf="Email.errors?.['email']">Please enter a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                        class="form-control" 
+                        placeholder="Password" 
+                        type= "password"
+                        name="password" 
+                        #Password="ngModel"
+                        ngModel
+                        required
+                        password
+                        [(ngModel)]="oPassword"
+                        [ngClass]="{'is-invalid':Password.touched&&Password.invalid}">
+                        <div class="alert alert-danger" *ngIf = "Password.touched && Password.invalid">
+                            <div *ngIf="Password.errors?.['required']">Password cannot be empty</div>
+                        </div>                    
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password"
+                        class="form-control" 
+                        placeholder="Confirm Password" 
+                        name="confirmPassword" 
+                        #ConfirmPassword="ngModel"
+                        [(ngModel)]="cPassword"
+                        ngModel
+                        required
+                        password
+                        (keyup)="checkPassword(cPassword,oPassword)"
+                        >
+                        <div *ngIf = "incorrectPassword && ConfirmPassword.touched" class="alert alert-danger">
+                            Passwords must be the same
+                        </div>
+                    </div>
+                    
+                    <button [disabled]="incorrectPassword || loginForm.invalid" (click)="onSubmit(cPassword,eMail)" style="width:100%; font-size:20px" class="btn mt-2 btn-block btn-theme" routerLink="/sign-up">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

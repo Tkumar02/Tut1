@@ -46,3 +46,5 @@ input[type = text], input[type = email], input[type=password] {
     font-size: 13px;
     background-color: var(--primary-color) !important;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

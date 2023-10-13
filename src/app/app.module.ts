@@ -6,6 +6,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field'
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -26,6 +29,7 @@ import { AllPostsComponent } from './posts/all-posts/all-posts.component';
 import { NewPostComponent } from './posts/new-post/new-post.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ import { SubscribersComponent } from './subscribers/subscribers.component';
     NewPostComponent,
     LoginComponent,
     SubscribersComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,8 @@ import { SubscribersComponent } from './subscribers/subscribers.component';
     ReactiveFormsModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
